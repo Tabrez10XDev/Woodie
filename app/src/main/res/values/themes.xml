@@ -24,4 +24,11 @@
         <item name="paddingStart">5dp</item>
         <item name="paddingEnd">5dp</item>
     </style>
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="color">@color/white</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

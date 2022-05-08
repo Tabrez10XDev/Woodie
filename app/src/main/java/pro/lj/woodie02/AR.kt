@@ -14,7 +14,6 @@ import com.google.ar.core.Anchor
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
-import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -30,48 +29,51 @@ class AR : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         Log.d("TAGGG","here")
+        val intent = this.intent
+        val bundle = intent.getBundleExtra("item")
+        val tree : Tree = bundle?.getSerializable("item") as Tree
 
-//        if (!checkIsSupportedDeviceOrFinish(this)) {
-//            return;
-//        }
-//        val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
-//
-//        arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
-//            val anchor = hitResult.createAnchor()
-//            placeObject(arFragment, anchor, 0)
-//        }
+        binding.apply {
+            tvTree.text = tree.name
+            tvHeart.text = tree.lifespan + "Years"
+            tvFace.text = tree.uses
+            tvPlant.text = tree.plantedOn
+            tvHand.text = tree.plantedBy
+        }
+        if (!checkIsSupportedDeviceOrFinish(this)) {
+            return;
+        }
+        val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
+
+        arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
+            val anchor = hitResult.createAnchor()
+            placeObject(arFragment, anchor, tree.modelUri)
+        }
 
     }
 
-//    private fun placeObject(arFragment: ArFragment, anchor: Anchor, id: Int) {
-//        ModelRenderable.builder()
-//            .setSource(
-//                arFragment.context,
-//                RenderableSource.builder()
-//                    .setSource(arFragment.context,
-//                        Uri.parse("https://firebasestorage.googleapis.com/v0/b/woodie-13061.appspot.com/o/Persian.glb?alt=media&token=7df11ae2-60d9-4722-8f41-8cb95ed7cb0e"),
-//                        RenderableSource.SourceType.GLB)
-//                    .build()
-//
-//               // Uri.parse("https://firebasestorage.googleapis.com/v0/b/woodie-13061.appspot.com/o/bear%20(1).sfb?alt=media&token=2986ba67-cc24-409b-95b4-de60a8eb7dfb"),
-//
-//                )
-//            .build()
-//            .thenAccept { modelRenderable: ModelRenderable ->
-//                Log.d("TAGGG","plced vro")
-//                addNodeToScene(
-//                    arFragment,
-//                    anchor,
-//                    modelRenderable
-//                )
-//            }
-//            .exceptionally { throwable: Throwable ->
-//                Log.d("mine",throwable.message.toString())
-//                Toast.makeText(arFragment.context, "Error:" + throwable.message, Toast.LENGTH_LONG)
-//                    .show()
-//                null
-//            }
-//    }
+    private fun placeObject(arFragment: ArFragment, anchor: Anchor, id: String) {
+        ModelRenderable.builder()
+            .setSource(
+                arFragment.context,
+                Uri.parse(id),
+            )
+            .build()
+            .thenAccept { modelRenderable: ModelRenderable ->
+                Log.d("TAGGG","plced vro")
+                addNodeToScene(
+                    arFragment,
+                    anchor,
+                    modelRenderable
+                )
+            }
+            .exceptionally { throwable: Throwable ->
+                Log.d("TAGGG",throwable.message.toString())
+                Toast.makeText(arFragment.context, "Error:" + throwable.message, Toast.LENGTH_LONG)
+                    .show()
+                null
+            }
+    }
 
     private fun addNodeToScene(arFragment: ArFragment, anchor: Anchor, renderable: Renderable) {
 
@@ -80,6 +82,7 @@ class AR : AppCompatActivity() {
         node.renderable = renderable
         node.setParent(anchorNode)
         arFragment.arSceneView.scene.addChild(anchorNode)
+
         node.select()
     }
 

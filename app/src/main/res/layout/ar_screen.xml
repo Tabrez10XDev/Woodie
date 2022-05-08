@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AR">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:alpha="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <FrameLayout
@@ -26,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
             android:id="@+id/ux_fragment"
             android:layout_width="match_parent"
@@ -35,18 +26,165 @@
 
     </FrameLayout>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/loadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorSize="64dp"
+    <LinearLayout
+        android:id="@+id/layio"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:trackColor="#3FFFFFFF" />
+        android:background="@drawable/ar_ll"
+        android:alpha="0.65"
+        android:orientation="horizontal" />
 
-</FrameLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivTree"
+        android:layout_width="50dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitXY"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:elevation="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layio"
+        android:src="@drawable/ic_icon_tree"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivHeart"
+        android:layout_width="50dp"
+        android:elevation="4dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitXY"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTree"
+        android:src="@drawable/ic_icon_heart"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivFace"
+        android:layout_width="50dp"
+        android:elevation="4dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitXY"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivHeart"
+        android:src="@drawable/ic_icon_face"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivPlant"
+        android:layout_width="50dp"
+        android:elevation="4dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitXY"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivFace"
+        android:src="@drawable/ic_icon_plant"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivHand"
+        android:layout_width="50dp"
+        android:elevation="4dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitXY"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivPlant"
+        android:src="@drawable/ic_icon_hand"/>
+
+    <TextView
+        android:id="@+id/tvTree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:background="@drawable/ar_tv"
+        android:translationZ="90dp"
+        android:padding="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/ivTree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivTree"/>
+
+    <TextView
+        android:id="@+id/tvHeart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:background="@drawable/ar_tv"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/ivHeart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivHeart"/>
+
+    <TextView
+        android:id="@+id/tvFace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:padding="8dp"
+        android:background="@drawable/ar_tv"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/ivFace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivFace"/>
+
+    <TextView
+        android:id="@+id/tvPlant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:background="@drawable/ar_tv"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/ivPlant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivPlant"/>
+
+    <TextView
+        android:id="@+id/tvHand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:background="@drawable/ar_tv"
+        android:layout_marginEnd="16dp"
+        android:translationZ="90dp"
+        app:layout_constraintStart_toEndOf="@id/ivHand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivHand"/>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
