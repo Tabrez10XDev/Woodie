@@ -1,4 +1,4 @@
-package pro.lj.woodie02
+package pro.lj.woodie02.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.google.firebase.firestore.FirebaseFirestore
-import pro.lj.woodie02.databinding.FragmentHomeBinding
+import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.FragmentQRBinding
+import pro.lj.woodie02.ui.app.AR
 
 
 class QRFragment : Fragment() {

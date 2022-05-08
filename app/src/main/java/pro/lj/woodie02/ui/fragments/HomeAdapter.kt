@@ -1,4 +1,4 @@
-package pro.lj.woodie02
+package pro.lj.woodie02.ui.fragments
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.ItemPreviewBinding
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {

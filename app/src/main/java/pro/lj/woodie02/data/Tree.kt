@@ -1,4 +1,4 @@
-package pro.lj.woodie02
+package pro.lj.woodie02.data
 
 import java.io.Serializable
 

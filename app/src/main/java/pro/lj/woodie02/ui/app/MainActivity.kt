@@ -1,4 +1,4 @@
-package pro.lj.woodie02
+package pro.lj.woodie02.ui.app
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
+import pro.lj.woodie02.R
 import pro.lj.woodie02.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         layout = binding.mainLayout
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setTheme(R.style.Theme_Woodie02)
         setContentView(view)
         binding.bottomNavBar.setupWithNavController(findNavController(R.id.fragment))
