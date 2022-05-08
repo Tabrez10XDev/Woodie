@@ -44,7 +44,7 @@ class AR : AppCompatActivity() {
         binding.apply {
             tvName.text = tree.name
             tvTree.text = spannableText("Height -" + tree.height,0,8)
-            tvHeart.text = spannableText("Lifespan - " + tree.lifespan + "Years", 0, 10)
+            tvHeart.text = spannableText("Lifespan - " + tree.lifespan + " Years", 0, 10)
             tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
             tvPlant.text = spannableText("Planted On - " + tree.plantedOn,0 , 12)
             tvHand.text = spannableText("Planted By - " + tree.plantedBy, 0, 12)

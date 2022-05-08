@@ -17,6 +17,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline2">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30 ˚C"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/ivWeather"
+            app:layout_constraintTop_toTopOf="@id/ivWeather"
+            android:textColor="@color/white"
+
+            app:layout_constraintBottom_toBottomOf="@id/ivWeather"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ivOne"
+            app:layout_constraintVertical_bias="1"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/partly_cloudy_day"/>
 
             <TextView
                 android:id="@+id/textView"
@@ -32,14 +51,13 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnQR"
-            android:layout_width="wrap_content"
-            android:minWidth="100dp"
-            android:layout_height="30dp"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:background="@drawable/btn_qr"
             android:elevation="4dp"
             android:text="QR Scan"
             android:layout_marginTop="24dp"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:textColor="@color/white"
             android:paddingHorizontal="12dp"
             android:textAllCaps="false"
@@ -78,7 +96,7 @@
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent=".4"
+        app:layout_constraintGuide_percent=".45"
         android:orientation="horizontal" />
 
 
@@ -107,5 +125,18 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/animation_view"
+        app:lottie_rawRes="@raw/loading_animation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/homeRV"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:translationZ="100dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

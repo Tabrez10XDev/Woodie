@@ -1,10 +1,12 @@
 package pro.lj.woodie02.ui.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,6 +48,7 @@ class HomeFragment : Fragment() {
         binding.btnQR.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_QRFragment)
         }
+        startLoading()
         fireStore.collection("trees")
                 .get()
                 .addOnSuccessListener { result ->
@@ -59,9 +62,13 @@ class HomeFragment : Fragment() {
                         homeAdapter.differ.submitList(itemList)
                         Log.d("TABY", "${document.id} => ${document.data}")
                     }
+                    stopLoading()
                 }
                 .addOnFailureListener { exception ->
                     Log.w("TABY", "Error getting documents.", exception)
+                    Toast.makeText(activity,exception.localizedMessage, Toast.LENGTH_SHORT).show()
+                    stopLoading()
+
                 }
 //        val intent = Intent(requireActivity(), AR::class.java)
 //        startActivity(intent)
@@ -91,6 +98,17 @@ class HomeFragment : Fragment() {
 //        codeScanner.releaseResources()
 //        super.onPause()
 //    }
+
+    private fun startLoading(){
+        binding.animationView.visibility = View.VISIBLE
+        binding.animationView.playAnimation()
+
+    }
+
+    private fun stopLoading(){
+        binding.animationView.pauseAnimation()
+        binding.animationView.visibility = View.INVISIBLE
+    }
 
     private fun setupHomeRecyclerView(){
         homeAdapter =
