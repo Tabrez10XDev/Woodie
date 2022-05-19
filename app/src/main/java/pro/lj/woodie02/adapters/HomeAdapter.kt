@@ -1,4 +1,4 @@
-package pro.lj.woodie02.ui.fragments
+package pro.lj.woodie02.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

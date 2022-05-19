@@ -80,6 +80,7 @@ dependencies {
     implementation 'com.google.ar.sceneform:core:1.17.1'
 
     implementation "com.airbnb.android:lottie:3.4.0"
+    implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'

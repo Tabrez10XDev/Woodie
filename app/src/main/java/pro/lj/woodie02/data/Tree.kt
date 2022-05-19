@@ -7,8 +7,7 @@ data class Tree(
         val height: String = "",
         val lifespan: String = "",
         val uses: String = "",
-        val plantedOn: String = "",
-        val plantedBy: String = "",
         val imageUri: String = "",
-        val modelUri: String = ""
+        val scientificName: String = "",
+        val vernacularNames: String = "",
 ): Serializable
