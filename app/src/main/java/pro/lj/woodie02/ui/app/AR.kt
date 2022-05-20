@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -24,10 +25,11 @@ import com.google.ar.sceneform.ux.TransformableNode
 import pro.lj.woodie02.R
 import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.ArScreenBinding
+import java.util.*
 
-class AR : AppCompatActivity() {
+class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var binding: ArScreenBinding
-
+    lateinit var tts: TextToSpeech
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ArScreenBinding.inflate(layoutInflater)
@@ -38,7 +40,7 @@ class AR : AppCompatActivity() {
         val intent = this.intent
         val bundle = intent.getBundleExtra("item")
         val tree : Tree = bundle?.getSerializable("item") as Tree
-
+        tts = TextToSpeech(this, this)
 
 
         binding.apply {
@@ -46,18 +48,22 @@ class AR : AppCompatActivity() {
             tvTree.text = spannableText("Height -" + tree.height,0,8)
             tvHeart.text = spannableText("Lifespan - " + tree.lifespan + " Years", 0, 10)
             tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
-//            tvPlant.text = spannableText("Planted On - " + tree.plantedOn,0 , 12)
-//            tvHand.text = spannableText("Planted By - " + tree.plantedBy, 0, 12)
+            tvPlant.text = spannableText("Scientific Names - " + tree.scientificName,0 , 18)
+            tvHand.text = spannableText("Vernacular Names - " + tree.vernacularNames, 0, 18)
         }
-        if (!checkIsSupportedDeviceOrFinish(this)) {
-            return;
-        }
-        val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
 
-        arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
-            val anchor = hitResult.createAnchor()
-            //placeObject(arFragment, anchor, tree.modelUri)
+        binding.btnPlay.setOnClickListener {
+            tts.speak(tree.uses, TextToSpeech.QUEUE_FLUSH, null,"")
         }
+//        if (!checkIsSupportedDeviceOrFinish(this)) {
+//            return;
+//        }
+//        val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
+//
+//        arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
+//            val anchor = hitResult.createAnchor()
+//            placeObject(arFragment, anchor, tree.modelUri)
+//        }
 
     }
 
@@ -122,4 +128,25 @@ class AR : AppCompatActivity() {
 
         return true
     }
+
+    override fun onDestroy() {
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        super.onDestroy()
+    }
+
+    override fun onInit(p0: Int) {
+        if (p0 == TextToSpeech.SUCCESS) {
+            val result = tts!!.setLanguage(Locale.US)
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS","Unknown error occured")
+            } else {
+                binding.btnPlay.isEnabled = true
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!")
+        }    }
 }

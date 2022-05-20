@@ -10,4 +10,5 @@ data class Tree(
         val imageUri: String = "",
         val scientificName: String = "",
         val vernacularNames: String = "",
+        val modelUri: String = ""
 ): Serializable

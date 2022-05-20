@@ -3,7 +3,9 @@ package pro.lj.woodie02.ui.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -21,11 +23,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.arasthel.spannedgridlayoutmanager.SpanSize
+import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.HomeAdapter
 import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.FragmentHomeBinding
+import pro.lj.woodie02.ui.app.AR
 import pro.lj.woodie02.utils.Status
 import pro.lj.woodie02.viewmodels.MainViewModel
 
@@ -60,18 +65,8 @@ class HomeFragment : Fragment() {
         val activity = requireActivity()
         fireStore = FirebaseFirestore.getInstance()
         setupHomeRecyclerView()
+        checkForPermission()
 
-        if (ContextCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-            &&
-            ContextCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            askForLocationPermissions();
-        } else {
-            //do your work
-        }
         fetchLocation()
         binding.btnQR.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_QRFragment)
@@ -101,7 +96,21 @@ class HomeFragment : Fragment() {
 
                 }
 
+        updateWeather()
 
+        homeAdapter.setOnItemClickListener { tree ->
+            val bundle = Bundle().apply {
+                putSerializable("item", tree)
+            }
+            val intent = Intent(requireActivity(), AR::class.java)
+            intent.putExtra("item", bundle)
+            startActivity(intent)
+        }
+
+
+    }
+
+    private fun updateWeather(){
         viewModel.liveWeather.observe(viewLifecycleOwner, Observer {
             when(it.status){
                 Status.SUCCESS -> {
@@ -134,8 +143,6 @@ class HomeFragment : Fragment() {
                 Status.ERROR -> {}
             }
         })
-
-
     }
 
 
@@ -151,17 +158,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupHomeRecyclerView(){
-//
-//        val spannedGridLayoutManager = SpannedGridLayoutManager(
-//                orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
-//                spans = 4)
+
+        val spannedGridLayoutManager = SpannedGridLayoutManager(
+                orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
+                spans = 3,
+        )
+        spannedGridLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup{ position ->
+            if(position % 6 == 0) {
+                SpanSize(2, 2)
+            }else{
+                SpanSize(1,1)
+            }
+        }
         homeAdapter =
                 HomeAdapter()
         binding.homeRV.apply {
             adapter = homeAdapter
-            layoutManager = GridLayoutManager(requireActivity(), 2)
-//            edgeEffectFactory =
-//                    BounceEdgeEffectFactory()
+            layoutManager = spannedGridLayoutManager
+
         }
     }
 
@@ -195,13 +209,30 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun checkForPermission(){
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                &&
+                ContextCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                &&
+                ContextCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+            askForPermissions()
+        } else {
+            //do your work
+        }
+    }
 
-    private fun askForLocationPermissions() {
+    private fun askForPermissions() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
             AlertDialog.Builder(requireContext())
-                .setTitle("Location permessions needed")
+                .setTitle("Location permissions needed")
                 .setMessage("you need to allow this permission!")
                 .setPositiveButton("Sure", DialogInterface.OnClickListener { dialog, which ->
                     ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -217,6 +248,7 @@ class HomeFragment : Fragment() {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 100)
         }
+
     }
 
 }

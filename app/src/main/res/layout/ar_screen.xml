@@ -17,12 +17,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
-            android:id="@+id/ux_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <fragment android:name="com.google.ar.sceneform.ux.ArFragment"-->
+<!--            android:id="@+id/ux_fragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-        </fragment>
+<!--        </fragment>-->
 
     </FrameLayout>
 
@@ -37,7 +37,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/ar_ll"
         android:alpha="0.65"
-        android:orientation="horizontal" />
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+
+
+
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivTree"
@@ -92,11 +99,11 @@
         android:scaleType="fitXY"
         android:layout_height="50dp"
         android:backgroundTint="@color/white"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:translationZ="90dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivFace"
+        app:layout_constraintTop_toBottomOf="@id/tvFace"
         android:src="@drawable/ic_icon_plant"/>
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -112,8 +119,8 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivPlant"
-        android:src="@drawable/ic_icon_hand"/>
+        app:layout_constraintTop_toBottomOf="@id/tvPlant"
+        android:src="@drawable/ic_icon_names"/>
 
     <TextView
         android:id="@+id/tvTree"
@@ -147,7 +154,7 @@
         android:id="@+id/tvFace"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="2"
+        android:maxLines="4"
         android:padding="8dp"
         android:background="@drawable/ar_tv"
         android:translationZ="90dp"
@@ -175,7 +182,7 @@
         android:id="@+id/tvHand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLines="3"
         android:padding="8dp"
         android:background="@drawable/ar_tv"
         android:layout_marginEnd="16dp"
@@ -201,6 +208,8 @@
         app:layout_constraintBottom_toTopOf="@id/tvTree"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnPlay"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_play_arrow_24"

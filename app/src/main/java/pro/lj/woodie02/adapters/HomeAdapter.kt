@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import pro.lj.woodie02.data.Tree
+import pro.lj.woodie02.databinding.ItemPreview2Binding
 import pro.lj.woodie02.databinding.ItemPreviewBinding
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
@@ -20,7 +22,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
         onItemClickListener = listener
     }
 
-    inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemPreview2Binding): RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Tree>(){
         override fun areItemsTheSame(oldItem: Tree, newItem: Tree): Boolean {
@@ -37,7 +39,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPreview2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -65,44 +67,16 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
             binding.apply {
 
                 tvName.text = item.name
+                tvScience.text = item.scientificName
                 Glide
                         .with(itemView.context)
                         .load(item.imageUri)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(ivProduct)
             }
 
-
-
         }
 
-
-
     }
-
-//    fun flipCard(context: Context, visibleView: View, inVisibleView: View) {
-//        try {
-//            visibleView.visibility = View.VISIBLE
-//            val flipOutAnimatorSet =
-//                    AnimatorInflater.loadAnimator(
-//                            context,
-//                            R.animator.flip_out
-//                    ) as AnimatorSet
-//            flipOutAnimatorSet.setTarget(inVisibleView)
-//            val flipInAnimationSet =
-//                    AnimatorInflater.loadAnimator(
-//                            context,
-//                            R.animator.flip_in
-//                    ) as AnimatorSet
-//            flipInAnimationSet.setTarget(visibleView)
-//            flipOutAnimatorSet.start()
-//            flipInAnimationSet.start()
-//            flipInAnimationSet.doOnEnd {
-//                inVisibleView.visibility = View.GONE
-//            }
-//        } catch (e: Exception) {
-//            // logHandledException(e)
-//            Log.d("LJS",e.localizedMessage)
-//        }
-//    }
 
 }

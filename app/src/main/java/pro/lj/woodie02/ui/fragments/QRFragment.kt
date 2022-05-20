@@ -1,5 +1,7 @@
 package pro.lj.woodie02.ui.fragments
 
+import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.google.firebase.firestore.FirebaseFirestore
@@ -41,6 +45,25 @@ class QRFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                        Manifest.permission.CAMERA)) {
+            AlertDialog.Builder(requireContext())
+                    .setTitle("Camera permissions needed")
+                    .setMessage("you need to allow this permission!")
+                    .setPositiveButton("Sure", DialogInterface.OnClickListener { dialog, which ->
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA),
+                                100)
+                    })
+                    .setNegativeButton("Not now", DialogInterface.OnClickListener { dialog, which ->
+                        //                                        //Do nothing
+                    })
+                    .show()
+
+        } else {
+
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA),
+                    100)
+        }
         val scannerView = binding.scannerView
         val activity = requireActivity()
         fireStore = FirebaseFirestore.getInstance()
@@ -58,11 +81,6 @@ class QRFragment : Fragment() {
         }
         codeScanner.startPreview()
 
-
-
-//        scannerView.setOnClickListener {
-//            codeScanner.startPreview()
-//        }
 
     }
 
