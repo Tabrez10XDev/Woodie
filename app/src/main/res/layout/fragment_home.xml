@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,7 +22,7 @@
             android:id="@+id/tvTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30 ˚C"
+            android:text="- ˚C"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/ivWeather"
             app:layout_constraintTop_toTopOf="@id/ivWeather"
@@ -143,8 +144,8 @@
         />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/animation_view"
         app:lottie_rawRes="@raw/edupia_loading"
         app:layout_constraintStart_toStartOf="parent"

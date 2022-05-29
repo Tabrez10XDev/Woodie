@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/ic_splash_screen"  android:gravity="center"/>
-    <item android:drawable="@drawable/srm_logo_2" android:gravity="end|bottom" android:right="90sp" android:bottom="45dp"
-        android:height="60dp" android:width="60dp"/>
+    <item android:drawable="@drawable/srm_logo_2" android:gravity="end|bottom" android:right="70sp" android:bottom="45dp"
+        android:height="45dp" android:width="45dp"/>
     <item android:drawable="@drawable/nss_logo_2" android:gravity="end|bottom" android:bottom="45dp" android:right="20sp"
-        android:height="60dp" android:width="60dp"/>
+        android:height="45dp" android:width="45dp"/>
 </layer-list>

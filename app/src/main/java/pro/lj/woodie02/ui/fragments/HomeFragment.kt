@@ -19,13 +19,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.arasthel.spannedgridlayoutmanager.SpanSize
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.HomeAdapter
 import pro.lj.woodie02.data.Tree
@@ -44,7 +48,6 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
     lateinit var locationManager: LocationManager
     var locationByNetwork : Location ?= null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,7 +69,6 @@ class HomeFragment : Fragment() {
         fireStore = FirebaseFirestore.getInstance()
         setupHomeRecyclerView()
         checkForPermission()
-
         fetchLocation()
         binding.btnQR.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_QRFragment)
@@ -115,7 +117,7 @@ class HomeFragment : Fragment() {
             when(it.status){
                 Status.SUCCESS -> {
                     val weather = it.data?.weather?.get(0)
-                    ((it.data?.main?.temp?.minus(273.15))?.toFloat().toString() + "˚C").also { binding.tvTemp.text = it }
+                    ((it.data?.main?.temp?.minus(273.15))?.toFloat()?.toInt().toString() + "˚C").also { binding.tvTemp.text = it }
                     when {
                         weather?.id.toString().contains("800") -> {
                             binding.ivWeather.setImageResource(R.drawable.ic_clear)
@@ -140,7 +142,10 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
-                Status.ERROR -> {}
+                Status.ERROR -> {
+                    Log.d("Weathers",it.message.toString())
+                    Toast.makeText(requireContext(),"Unknown error occured",Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
@@ -179,45 +184,51 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     @SuppressLint("MissingPermission")
     fun fetchLocation(){
         locationManager = requireActivity().getSystemService(android.content.Context.LOCATION_SERVICE) as LocationManager
-        val hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
         val networkLocationListener: LocationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 viewModel.getWeather(location.latitude.toString(), location.longitude.toString())
                 locationByNetwork= location
+                Log.d("Weathers",locationByNetwork.toString())
                 return
             }
 
-            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-            override fun onProviderEnabled(provider: String) {}
+            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+            }
+            override fun onProviderEnabled(provider: String) {
+                val location = locationManager.getLastKnownLocation(provider)
+                Log.d("Weathers",location?.latitude.toString() + location?.longitude + "hii")
+                viewModel.getWeather(location?.latitude.toString(), location?.longitude.toString())
+
+            }
             override fun onProviderDisabled(provider: String) {
-                Toast.makeText(requireContext(), "Check your connection",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Turn on location services for live weather updates", Toast.LENGTH_SHORT).show()
                 return
             }
         }
 
-        if (hasNetwork) {
+//        if (hasNetwork) {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     5000,
                     0F,
                     networkLocationListener
             )
-        }
+//        }
     }
 
     private fun checkForPermission(){
         if (ContextCompat.checkSelfPermission(requireContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
-                &&
+                ||
                 ContextCompat.checkSelfPermission(requireContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
-                &&
+                ||
                 ContextCompat.checkSelfPermission(requireContext(),
                         Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
