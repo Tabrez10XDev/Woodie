@@ -27,18 +27,28 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.ar.core.Anchor
+import com.google.ar.core.Config
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.Node
+import com.google.ar.sceneform.SceneView
+import com.google.ar.sceneform.math.Vector3
+import com.google.ar.sceneform.rendering.CameraStream
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
+import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.SliderAdapter
 import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.ArScreenBinding
+import java.lang.Exception
 import java.lang.Math.abs
 import java.util.*
 
@@ -46,7 +56,11 @@ import java.util.*
 class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var binding: ArScreenBinding
     private lateinit var sliderAdapter: SliderAdapter
+    private lateinit var arFragment: ArFragment
+    private val arSceneView get() = arFragment.arSceneView
+    private val scene get() = arSceneView.scene
 
+    private var model: Renderable? = null
     lateinit var tts: TextToSpeech
     var status = 1
     @RequiresApi(Build.VERSION_CODES.O)
@@ -62,9 +76,6 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         val tree : Tree = bundle?.getSerializable("item") as Tree
         tts = TextToSpeech(this, this)
         tts.setSpeechRate(1.2f)
-
-        stopLoading()
-        setupSurface()
         setUpViewPager(tree)
         binding.btnClose.setOnClickListener {
             onBackPressed()
@@ -96,22 +107,54 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
-        val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
-        arFragment?.setOnSessionInitializationListener {
-            Log.d("ARCheck", "Initialized")
-        }
-        arFragment?.planeDiscoveryController?.hide()
-        arFragment?.planeDiscoveryController?.setInstructionView(null)
 
-        arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
-            startLoading()
-            Log.d("ARCheck", "Tapped")
-            val anchor = hitResult.createAnchor()
-            Log.d("ARCheck", "Created Anchor")
-            placeObject(arFragment, anchor, tree.modelUri)
-            Log.d("ARCheck", "Placed")
+        arFragment = (supportFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
+            setOnSessionConfigurationListener { session, config ->
+                instructionsController = null
+            }
+
+            setOnTapArPlaneListener(::onTapPlane)
         }
 
+        CoroutineScope(Dispatchers.Main).launch {
+            loadModels(tree)
+        }
+
+
+
+    }
+
+    private fun loadModels(tree: Tree) {
+        try{
+            ModelRenderable.builder()
+                .setSource(applicationContext, Uri.parse(tree.modelUri))
+                .setIsFilamentGltf(true)
+                .build()
+                .thenAccept {
+                    model = it
+                }
+        }
+        catch (e:Exception){
+            Log.d("Scee",e.localizedMessage.toString())
+        }
+
+    }
+
+    private fun onTapPlane(hitResult: HitResult, plane: Plane, motionEvent: MotionEvent) {
+        if (model == null) {
+            Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Create the Anchor.
+        scene.addChild(AnchorNode(hitResult.createAnchor()).apply {
+            // Create the transformable model and add it to the anchor.
+            addChild(TransformableNode(arFragment.transformationSystem).apply {
+                renderable = model
+                renderableInstance?.animate(true)?.start()
+                Log.d("Scee","HIII")
+            })
+        })
     }
 
     private fun changeTerraform(tree: Tree){
@@ -142,10 +185,7 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             status = 1
         }
     }
-    private fun setupSurface(){
-      //  binding.previewView.visibility = View.VISIBLE
 
-    }
 
     private fun setUpViewPager(tree: Tree){
         val compositePageTransformer = CompositePageTransformer()
@@ -183,44 +223,6 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.animLL.visibility = View.INVISIBLE
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun placeObject(arFragment: ArFragment, anchor: Anchor, id: String) {
-
-        ModelRenderable.builder()
-            .setSource(
-                arFragment.context,
-                Uri.parse(id),
-            )
-            .build()
-            .thenAccept { modelRenderable: ModelRenderable ->
-                Log.d("ARCheck", "then accept")
-                stopLoading()
-                addNodeToScene(
-                    arFragment,
-                    anchor,
-                    modelRenderable
-                )
-            }
-            .exceptionally { throwable: Throwable ->
-                stopLoading()
-                Log.d("TAGGG", throwable.message.toString())
-                Toast.makeText(arFragment.context, "Error:" + throwable.message, Toast.LENGTH_LONG)
-                    .show()
-                null
-            }
-    }
-
-    private fun addNodeToScene(arFragment: ArFragment, anchor: Anchor, renderable: Renderable) {
-
-        val anchorNode = AnchorNode(anchor)
-        val node = TransformableNode(arFragment.transformationSystem)
-        node.renderable = renderable
-        node.setParent(anchorNode)
-        arFragment.arSceneView.scene.addChild(anchorNode)
-
-        node.select()
-    }
 
     private fun spannableText(text: String, start: Int, end: Int) : SpannableStringBuilder {
         val spannableStringBuilder = SpannableStringBuilder(text)
