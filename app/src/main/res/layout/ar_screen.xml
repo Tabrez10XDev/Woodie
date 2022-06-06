@@ -48,6 +48,7 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginVertical="24dp"
         android:elevation="24dp"
+        android:translationZ="130dp"
         android:alpha="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -58,7 +59,7 @@
             android:layout_height="match_parent"
             android:id="@+id/animation_view"
             app:lottie_rawRes="@raw/landscape_loading"
-            android:translationZ="100dp"
+            android:translationZ="140dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"/>
 
@@ -282,47 +283,6 @@
     </ScrollView>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/tvName"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:maxLines="1"-->
-<!--        android:padding="16dp"-->
-<!--        android:background="@drawable/ar_tv"-->
-<!--        android:textSize="16sp"-->
-<!--        android:translationZ="90dp"-->
-<!--        android:fontFamily="@font/judson"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/tvTree"/>-->
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/btnPlay"-->
-<!--        android:enabled="false"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_baseline_play_arrow_24"-->
-<!--        android:tint="#85B7A5"-->
-<!--        android:backgroundTint="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:layout_margin="32dp"/>-->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -342,8 +302,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivLogo"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="-8dp"
         android:src="@drawable/arscreen_logo"
         app:layout_constraintBottom_toBottomOf="@id/tvName"

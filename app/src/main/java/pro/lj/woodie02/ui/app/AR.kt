@@ -1,5 +1,6 @@
 package pro.lj.woodie02.ui.app
 
+import android.R.array
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
@@ -17,10 +18,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -33,7 +34,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
-import com.google.zxing.Dimension
+import com.google.firebase.storage.FirebaseStorage
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.SliderAdapter
 import pro.lj.woodie02.data.Tree
@@ -45,8 +46,10 @@ import java.util.*
 class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var binding: ArScreenBinding
     private lateinit var sliderAdapter: SliderAdapter
+
     lateinit var tts: TextToSpeech
     var status = 1
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ArScreenBinding.inflate(layoutInflater)
@@ -61,17 +64,15 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         tts.setSpeechRate(1.2f)
 
         stopLoading()
-      //  binding.frame.visibility = View.GONE
         setupSurface()
         setUpViewPager(tree)
-
         binding.btnClose.setOnClickListener {
             onBackPressed()
         }
         binding.apply {
             tvName.text = tree.name
-            tvTree.text = spannableText("Height -" + tree.height, 0, 8)
-            tvHeart.text = spannableText("Lifespan - " + tree.lifespan + " Years", 0, 10)
+            tvTree.text = spannableText("Height - " + tree.height, 0, 8)
+            tvHeart.text = spannableText("Lifespan - " + tree.lifespan, 0, 10)
             tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
             tvPlant.text = spannableText("Scientific Names - " + tree.scientificName, 0, 18)
             tvHand.text = spannableText("Vernacular Names - " + tree.vernacularNames, 0, 18)
@@ -97,18 +98,18 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         val arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
         arFragment?.setOnSessionInitializationListener {
-            Log.d("ARCheck","Initialized")
+            Log.d("ARCheck", "Initialized")
         }
         arFragment?.planeDiscoveryController?.hide()
         arFragment?.planeDiscoveryController?.setInstructionView(null)
 
         arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
             startLoading()
-            Log.d("ARCheck","Tapped")
+            Log.d("ARCheck", "Tapped")
             val anchor = hitResult.createAnchor()
-            Log.d("ARCheck","Created Anchor")
+            Log.d("ARCheck", "Created Anchor")
             placeObject(arFragment, anchor, tree.modelUri)
-            Log.d("ARCheck","Placed")
+            Log.d("ARCheck", "Placed")
         }
 
     }
@@ -117,6 +118,7 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         if(status == 1){
             binding.tvName.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 horizontalBias = 1f
+                marginEnd = -16
             }
             binding.tvName.text = ""
             binding.viewPager.visibility = View.INVISIBLE
@@ -129,6 +131,8 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         else{
             binding.tvName.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 horizontalBias = 0.5f
+                marginEnd = 0
+
             }
             binding.tvName.text = tree.name
             binding.viewPager.visibility = View.VISIBLE
@@ -179,7 +183,10 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.animLL.visibility = View.INVISIBLE
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun placeObject(arFragment: ArFragment, anchor: Anchor, id: String) {
+
         ModelRenderable.builder()
             .setSource(
                 arFragment.context,
@@ -196,6 +203,7 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
                 )
             }
             .exceptionally { throwable: Throwable ->
+                stopLoading()
                 Log.d("TAGGG", throwable.message.toString())
                 Toast.makeText(arFragment.context, "Error:" + throwable.message, Toast.LENGTH_LONG)
                     .show()

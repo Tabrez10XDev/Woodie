@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Woodie02">
         <activity android:name=".ui.app.MainActivity"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme"
+            android:exported="true">
 
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.app.AR" />
+        <activity android:name=".ui.app.AR"
+            android:exported="true"/>
 
         <meta-data android:name="com.google.ar.core" android:value="required" />
         <meta-data

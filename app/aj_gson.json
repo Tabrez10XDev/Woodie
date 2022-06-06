@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "259978765016",
+    "project_id": "woodie-89e76",
+    "storage_bucket": "woodie-89e76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259978765016:android:379dfcf8eb206c2becedad",
+        "android_client_info": {
+          "package_name": "pro.lj.woodie02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259978765016-f31ua5948i02immhptdinr3viatk4hap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU8ZQnpNGQ9FP3zttG14jW7L9bZYD4kR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259978765016-f31ua5948i02immhptdinr3viatk4hap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
