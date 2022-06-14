@@ -7,6 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.app.AR">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.4"/>
 
     <ImageView
         android:layout_width="30sp"
@@ -15,13 +20,14 @@
         android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:translationZ="90dp"
+        android:translationZ="80dp"
         android:layout_margin="8dp"/>
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +35,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/arFragment"
+            android:translationZ="90dp"
             android:name="com.google.ar.sceneform.ux.ArFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

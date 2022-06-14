@@ -29,7 +29,7 @@
         <activity android:name=".ui.app.AR"
             android:exported="true"/>
 
-        <meta-data android:name="com.google.ar.core" android:value="required" />
+        <meta-data android:name="com.google.ar.core" android:value="optional" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

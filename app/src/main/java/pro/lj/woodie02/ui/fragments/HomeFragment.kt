@@ -5,11 +5,11 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +19,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arasthel.spannedgridlayoutmanager.SpanSize
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.HomeAdapter
 import pro.lj.woodie02.data.Tree
@@ -37,6 +33,8 @@ import pro.lj.woodie02.databinding.FragmentHomeBinding
 import pro.lj.woodie02.ui.app.AR
 import pro.lj.woodie02.utils.Status
 import pro.lj.woodie02.viewmodels.MainViewModel
+import java.lang.Float.max
+
 
 class HomeFragment : Fragment() {
     //private lateinit var codeScanner: CodeScanner
@@ -97,6 +95,7 @@ class HomeFragment : Fragment() {
                     stopLoading()
 
                 }
+
 
         updateWeather()
 
@@ -168,6 +167,7 @@ class HomeFragment : Fragment() {
                 orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
                 spans = 3,
         )
+
         spannedGridLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup{ position ->
             if(position % 6 == 0) {
                 SpanSize(2, 2)
