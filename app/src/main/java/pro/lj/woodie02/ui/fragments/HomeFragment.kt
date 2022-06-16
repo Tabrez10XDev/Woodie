@@ -9,35 +9,34 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.arasthel.spannedgridlayoutmanager.SpanSize
-import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import pro.lj.woodie02.R
 import pro.lj.woodie02.adapters.HomeAdapter
 import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.databinding.FragmentHomeBinding
 import pro.lj.woodie02.ui.app.AR
+import pro.lj.woodie02.ui.app.MainActivity
 import pro.lj.woodie02.utils.Status
 import pro.lj.woodie02.viewmodels.MainViewModel
-import java.lang.Float.max
 
 
 class HomeFragment : Fragment() {
     //private lateinit var codeScanner: CodeScanner
+    var doubleBackToExitPressedOnce: Boolean ?= null
 
     private val viewModel : MainViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
@@ -60,6 +59,21 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // in here you can do logic when backPress is clicked
+                if(doubleBackToExitPressedOnce == true){ activity?.finish() }
+
+                doubleBackToExitPressedOnce = true
+                Toast.makeText(requireContext(), "Press again to exit", Toast.LENGTH_SHORT).show()
+
+                Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+            }
+        })
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,9 +82,9 @@ class HomeFragment : Fragment() {
         setupHomeRecyclerView()
         checkForPermission()
         fetchLocation()
-        binding.btnQR.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_QRFragment)
-        }
+//        binding.btnQR.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_QRFragment)
+//        }
         startLoading()
         fireStore.collection("trees")
                 .get()
@@ -85,8 +99,9 @@ class HomeFragment : Fragment() {
                                 document.toObject(Tree::class.java)
                         )
 
-                        homeAdapter.differ.submitList(itemList)
                     }
+                    homeAdapter.differ.submitList(itemList)
+
                     stopLoading()
                 }
                 .addOnFailureListener { exception ->
@@ -97,8 +112,10 @@ class HomeFragment : Fragment() {
                 }
 
 
+
         updateWeather()
 
+        Log.d("AnimationCheck",binding.animationView.visibility.toString())
         homeAdapter.setOnItemClickListener { tree ->
             val bundle = Bundle().apply {
                 putSerializable("item", tree)
@@ -151,35 +168,43 @@ class HomeFragment : Fragment() {
 
 
     private fun startLoading(){
+
         binding.animationView.visibility = View.VISIBLE
+        binding.animationView.alpha = 1f
         binding.animationView.playAnimation()
 
     }
 
     private fun stopLoading(){
         binding.animationView.pauseAnimation()
+        binding.animationView.alpha = 0f
         binding.animationView.visibility = View.INVISIBLE
     }
 
+
+
     private fun setupHomeRecyclerView(){
-
-        val spannedGridLayoutManager = SpannedGridLayoutManager(
-                orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
-                spans = 3,
+//
+//        val spannedGridLayoutManager = SpannedGridLayoutManager(
+//                orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
+//                spans = 3,
+//        )
+//
+//        spannedGridLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup{ position ->
+//            if(position % 6 == 0) {
+//                SpanSize(2, 2)
+//            }else{
+//                SpanSize(1,1)
+//            }
+//        }
+        val gridLayoutManager = GridLayoutManager(
+            requireContext(),2
         )
-
-        spannedGridLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup{ position ->
-            if(position % 6 == 0) {
-                SpanSize(2, 2)
-            }else{
-                SpanSize(1,1)
-            }
-        }
         homeAdapter =
                 HomeAdapter()
         binding.homeRV.apply {
             adapter = homeAdapter
-            layoutManager = spannedGridLayoutManager
+            layoutManager = gridLayoutManager
 
         }
     }
@@ -205,7 +230,14 @@ class HomeFragment : Fragment() {
 
             }
             override fun onProviderDisabled(provider: String) {
-                Toast.makeText(requireContext(),"Turn on location services for live weather updates", Toast.LENGTH_SHORT).show()
+                if(!(activity as MainActivity).locationPromt) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Turn on location services for live weather updates",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    (activity as MainActivity).locationPromt = true
+                }
                 return
             }
         }

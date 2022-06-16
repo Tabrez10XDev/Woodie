@@ -25,6 +25,14 @@
         <item name="paddingEnd">5dp</item>
     </style>
 
+    <style name="BottomNavBar">
+        <item name="background">@drawable/bottom_nav_bg</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="roundedImageViewRounded">
         <item name="cornerFamily">rounded</item>
         <item name="colorOnBackground">@color/white</item>

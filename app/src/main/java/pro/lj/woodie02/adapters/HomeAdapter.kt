@@ -22,7 +22,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
         onItemClickListener = listener
     }
 
-    inner class ItemViewHolder(val binding: ItemPreview2Binding): RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Tree>(){
         override fun areItemsTheSame(oldItem: Tree, newItem: Tree): Boolean {
@@ -39,7 +39,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemPreview2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -67,7 +67,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
             binding.apply {
 
                 tvName.text = item.name
-                tvScience.text = item.scientificName
+                tvScientificName.text = item.scientificName
                 Glide
                         .with(itemView.context)
                         .load(item.imageUri)

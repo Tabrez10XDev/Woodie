@@ -62,15 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/animation_view"
-            android:visibility="gone"
-            app:lottie_rawRes="@raw/landscape_loading"
-            android:translationZ="140dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+
 
     </LinearLayout>
 
@@ -147,6 +139,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#008B8A"
                 android:maxLines="1"
                 android:background="@drawable/ar_tv"
                 android:translationZ="100dp"
@@ -179,6 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
+                android:textColor="#008B8A"
                 android:padding="8dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ar_tv"
@@ -212,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:maxLines="4"
+                    android:textColor="#008B8A"
                     android:padding="8dp"
                     android:background="@drawable/ar_tv"
                     android:translationZ="90dp"
@@ -245,6 +240,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="8dp"
+                    android:textColor="#008B8A"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ar_tv"
                     android:translationZ="90dp"
@@ -278,6 +274,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="3"
                     android:padding="8dp"
+                    android:textColor="#008B8A"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ar_tv"
                     android:layout_marginEnd="16dp"
@@ -313,7 +310,7 @@
         android:id="@+id/ivLogo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="-8dp"
+        android:layout_marginEnd="-14dp"
         android:src="@drawable/arscreen_logo"
         app:layout_constraintBottom_toBottomOf="@id/tvName"
         app:layout_constraintEnd_toStartOf="@id/tvName"
@@ -325,7 +322,7 @@
         android:visibility="invisible"
         android:layout_width="60dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_btn_play3"
+        android:src="@drawable/ic_play_final"
         app:layout_constraintBottom_toBottomOf="@id/btnAR"
         app:layout_constraintTop_toTopOf="@id/btnAR"
         app:layout_constraintEnd_toStartOf="@id/btnAR"

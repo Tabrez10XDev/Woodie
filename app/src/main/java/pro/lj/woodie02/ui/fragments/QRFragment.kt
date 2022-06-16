@@ -76,6 +76,7 @@ class QRFragment : Fragment() {
             }
         }
 
+
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }

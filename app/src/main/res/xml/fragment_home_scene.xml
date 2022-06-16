@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint android:id="@+id/animation_view" />
+        <Constraint android:id="@+id/layio" />
+        <Constraint android:id="@id/homeRV"/>
+        <Constraint android:id="@+id/ivOne"/>
+    </ConstraintSet>
+
+
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@+id/animation_view" />
+        <Constraint android:id="@id/layio"
+            android:alpha="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="40dp"/>
+        <Constraint android:id="@id/homeRV"/>
+    </ConstraintSet>
+
+
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start"
+        app:motionInterpolator="linear">
+
+        <OnSwipe
+            app:touchAnchorId="@id/homeRV"
+            app:dragDirection="dragUp"/>
+    </Transition>
+
+
+</MotionScene>

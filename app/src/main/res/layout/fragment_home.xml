@@ -1,127 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.HomeFragment">
+    tools:context=".ui.fragments.HomeFragment"
+    app:layoutDescription="@xml/fragment_home_scene">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layio"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/home_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="- ˚C"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/ivWeather"
-            app:layout_constraintTop_toTopOf="@id/ivWeather"
             android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivWeather"
+            app:layout_constraintStart_toEndOf="@id/ivWeather"
 
-            app:layout_constraintBottom_toBottomOf="@id/ivWeather"/>
+            app:layout_constraintTop_toTopOf="@id/ivWeather" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivWeather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ivOne"
-            app:layout_constraintVertical_bias="1"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/partly_cloudy_day"/>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/judson"
-                android:text="Woodie"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnQR"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:background="@drawable/btn_qr"
-            android:elevation="4dp"
-            android:text="QR Scan"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:paddingHorizontal="12dp"
-            android:textAllCaps="false"
+            android:layout_marginBottom="-32dp"
+            android:src="@drawable/partly_cloudy_day"
+            app:layout_constraintBottom_toTopOf="@id/ivOne"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/judson"
-            app:layout_constraintTop_toBottomOf="@id/textView"
-            app:layout_constraintStart_toStartOf="@id/ivTwo"
-            app:layout_constraintEnd_toEndOf="@id/ivTwo"
-            />
+            android:text="Woodie"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
             android:id="@+id/ivOne"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/btnQR"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@id/ivTwo"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_home"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/home_tree"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/judson"
-            android:textColor="@color/white"
-            android:maxLines="2"
-            android:text="Scan the QR code on the trees to get instant information about them  "
-            app:layout_constraintTop_toBottomOf="@id/ivTwo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivOne"
-            android:layout_marginEnd="-32dp"
-            android:layout_marginStart="16dp"/>
-
-        <ImageView
-            android:id="@+id/ivTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toTopOf="@+id/ivOne"
-            app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/home_details2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/judson"
-        android:text="Trees Availabe in our campus..."
-        android:textColor="#6B8335"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layio"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="32dp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeRV"
@@ -130,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv2"
+        app:layout_constraintTop_toBottomOf="@id/layio"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         />
@@ -139,13 +88,12 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/animation_view"
+        android:visibility="invisible"
         app:lottie_rawRes="@raw/edupia_loading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/homeRV"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:translationZ="100dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</androidx.constraintlayout.motion.widget.MotionLayout>

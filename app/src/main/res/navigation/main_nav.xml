@@ -10,17 +10,18 @@
         android:name="pro.lj.woodie02.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_home_to_QRFragment"
-            app:destination="@id/QRFragment"
-            app:enterAnim="@anim/fadein"
-            app:exitAnim="@anim/fadeout"
-            app:popEnterAnim="@anim/fadein"
-            app:popExitAnim="@anim/fadeout" />
     </fragment>
     <fragment
-        android:id="@+id/QRFragment"
+        android:id="@+id/qrFragment"
         android:name="pro.lj.woodie02.ui.fragments.QRFragment"
         android:label="fragment_q_r"
-        tools:layout="@layout/fragment_q_r" />
+        tools:layout="@layout/fragment_q_r" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="pro.lj.woodie02.ui.fragments.SearchFragment"
+        android:label="LocationFragment" >
+
+    </fragment>
 </navigation>

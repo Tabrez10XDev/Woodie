@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -81,7 +83,7 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
         binding.apply {
-            tvName.text = tree.name
+            tvName.text = " " + tree.name
             tvTree.text = spannableText("Height - " + tree.height, 0, 8)
             tvHeart.text = spannableText("Lifespan - " + tree.lifespan, 0, 10)
             tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
@@ -96,12 +98,12 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.btnPlay.setOnClickListener {
             if(!tts.isSpeaking){
                 tts.speak(tree.uses, TextToSpeech.QUEUE_FLUSH, null, "")
-                binding.btnPlay.setImageResource(R.drawable.ic_btn_stop)
+                binding.btnPlay.setImageResource(R.drawable.ic_stop_final)
 
             }
             else{
                 tts.stop()
-                binding.btnPlay.setImageResource(R.drawable.ic_btn_play3)
+                binding.btnPlay.setImageResource(R.drawable.ic_play_final)
             }
         }
         if (!checkIsSupportedDeviceOrFinish(this)) {
@@ -210,18 +212,7 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
-    private fun startLoading(){
-        binding.animLL.visibility = View.VISIBLE
-        binding.animationView.visibility = View.VISIBLE
-        binding.animationView.playAnimation()
 
-    }
-
-    private fun stopLoading(){
-        binding.animationView.pauseAnimation()
-        binding.animationView.visibility = View.INVISIBLE
-        binding.animLL.visibility = View.INVISIBLE
-    }
 
 
     private fun spannableText(text: String, start: Int, end: Int) : SpannableStringBuilder {
@@ -232,6 +223,13 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             end,
             Spannable.SPAN_INCLUSIVE_EXCLUSIVE
         )
+        spannableStringBuilder.setSpan(
+            StyleSpan(Typeface.BOLD),
+            start,
+            end,
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+        )
+
         return spannableStringBuilder
     }
 
