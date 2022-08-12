@@ -18,6 +18,7 @@
         android:theme="@style/Theme.Woodie02">
         <activity android:name=".ui.app.MainActivity"
             android:theme="@style/FullscreenTheme"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="true">
 
         <intent-filter>

@@ -81,7 +81,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layio"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="90dp"
+        android:clipToPadding="false"
         />
 
     <com.airbnb.lottie.LottieAnimationView

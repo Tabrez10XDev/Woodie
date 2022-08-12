@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import pro.lj.woodie02.data.Tree
-import pro.lj.woodie02.databinding.ItemPreview2Binding
 import pro.lj.woodie02.databinding.ItemPreviewBinding
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {

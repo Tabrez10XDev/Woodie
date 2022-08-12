@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import pro.lj.woodie02.R
 import pro.lj.woodie02.data.Tree
-import pro.lj.woodie02.databinding.ItemPreview2Binding
 import pro.lj.woodie02.databinding.SlideItemContainerBinding
 
 class SliderAdapter : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
@@ -51,8 +50,6 @@ class SliderAdapter : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
         val item = differ.currentList[0]
         with(holder){
             Log.d("sham",item.imageUri)
-            //binding.imageSlider.setImageResource(R.drawable.sample_tree)
-            binding.tvTips.text ="Tips: " + tips[position%(tips.size)]
             Glide
                 .with(itemView.context)
                 .load(item.imageUri)

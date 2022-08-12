@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pro.lj.woodie02.data.Tree
 import pro.lj.woodie02.data.Weather
 import pro.lj.woodie02.repositories.MainRepository
 import pro.lj.woodie02.utils.Resource
@@ -14,6 +15,7 @@ class MainViewModel(
 
     val liveWeather : MutableLiveData<Resource<Weather>> = MutableLiveData()
 
+    var firebaseData : MutableLiveData<List<Tree>> = MutableLiveData()
 
 
 

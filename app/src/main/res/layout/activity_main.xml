@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/mainLayout"
-    android:paddingHorizontal="4dp"
     android:layout_height="match_parent"
     tools:context=".ui.app.MainActivity">
-
-
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -73,7 +70,7 @@
         android:src="@drawable/home_3"
         android:backgroundTint="#91BCA1"
         app:borderWidth="0dp"
-        android:layout_marginBottom="-8dp"
+        android:layout_marginBottom="-20dp"
         app:layout_constraintBottom_toTopOf="@id/bottomNavBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -102,6 +103,7 @@ class HomeFragment : Fragment() {
                     }
                     homeAdapter.differ.submitList(itemList)
 
+                    viewModel.firebaseData = MutableLiveData(itemList)
                     stopLoading()
                 }
                 .addOnFailureListener { exception ->
@@ -184,19 +186,6 @@ class HomeFragment : Fragment() {
 
 
     private fun setupHomeRecyclerView(){
-//
-//        val spannedGridLayoutManager = SpannedGridLayoutManager(
-//                orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
-//                spans = 3,
-//        )
-//
-//        spannedGridLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup{ position ->
-//            if(position % 6 == 0) {
-//                SpanSize(2, 2)
-//            }else{
-//                SpanSize(1,1)
-//            }
-//        }
         val gridLayoutManager = GridLayoutManager(
             requireContext(),2
         )

@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/root"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.app.AR">
+    tools:context=".ui.app.AR"
+    app:layoutDescription="@xml/ar_screen_scene">
 
     <LinearLayout
+        android:id="@+id/bg_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        android:alpha="0.4"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="10dp"
+        android:alpha="0.5"
+        android:orientation="horizontal" />
 
     <ImageView
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:id="@+id/btnClose"
+        android:translationZ="95dp"
         android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:translationZ="80dp"
         android:layout_margin="8dp"/>
 
     <FrameLayout
@@ -35,7 +41,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/arFragment"
-            android:translationZ="90dp"
+            android:translationZ="50dp"
             android:name="com.google.ar.sceneform.ux.ArFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -55,11 +61,12 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginVertical="24dp"
         android:elevation="24dp"
+        android:translationZ="95dp"
         android:visibility="gone"
-        android:translationZ="130dp"
         android:alpha="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
 
 
 
@@ -70,13 +77,14 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:translationZ="120dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:translationZ="95dp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintBottom_toTopOf="@id/layio"/>
 
 
@@ -84,9 +92,11 @@
         android:id="@+id/layio"
         android:layout_margin="4dp"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:elevation="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/blur_bg"
+        app:layout_constraintTop_toBottomOf="@id/btnAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,32 +107,35 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:translationZ="90dp"
+        android:translationZ="95dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/layio"
         >
 
 
     <LinearLayout
+        android:id="@+id/ll2"
+        android:translationZ="95dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:orientation="vertical">
 
-
         <LinearLayout
+            android:id="@+id/llCommonName"
             android:layout_width="match_parent"
-            android:translationZ="90dp"
+            android:translationZ="95dp"
             android:layout_height="wrap_content">
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivTree"
+                android:id="@+id/ivCommonName"
                 android:layout_width="50dp"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                 android:scaleType="fitXY"
@@ -131,18 +144,55 @@
                 android:elevation="4dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginStart="16dp"
-                android:translationZ="90dp"
-                android:src="@drawable/ic_icon_tree"/>
+                android:translationZ="95dp"
+                android:src="@drawable/arscreen_logo"/>
 
             <TextView
-                android:id="@+id/tvTree"
+                android:id="@+id/tvCommonName"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#008B8A"
                 android:maxLines="1"
                 android:background="@drawable/ar_tv"
-                android:translationZ="100dp"
+                android:translationZ="95dp"
+                android:padding="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="match_parent"
+            android:translationZ="95dp"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivBotanicalDescription"
+                android:layout_width="50dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:elevation="4dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_botanical_description"/>
+
+            <TextView
+                android:id="@+id/tvBotanicalDescription"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#008B8A"
+                android:maxLines="1"
+                android:background="@drawable/ar_tv"
+                android:translationZ="95dp"
                 android:padding="8dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/judson" />
@@ -150,12 +200,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivHeart"
+                android:id="@+id/ivFamily"
                 android:layout_width="50dp"
                 android:elevation="4dp"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -164,11 +215,11 @@
                 android:backgroundTint="@color/white"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:translationZ="90dp"
-                android:src="@drawable/ic_icon_heart"/>
+                android:translationZ="95dp"
+                android:src="@drawable/ic_family"/>
 
             <TextView
-                android:id="@+id/tvHeart"
+                android:id="@+id/tvFamily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -176,19 +227,20 @@
                 android:padding="8dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ar_tv"
-                android:translationZ="90dp"
+                android:translationZ="95dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/judson" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivFace"
+                    android:id="@+id/ivUses"
                     android:layout_width="50dp"
                     android:elevation="4dp"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -197,11 +249,11 @@
                     android:backgroundTint="@color/white"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="16dp"
-                    android:translationZ="90dp"
-                    android:src="@drawable/ic_icon_face"/>
+                    android:translationZ="95dp"
+                    android:src="@drawable/ic_uses"/>
 
                 <TextView
-                    android:id="@+id/tvFace"
+                    android:id="@+id/tvUses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -209,7 +261,7 @@
                     android:textColor="#008B8A"
                     android:padding="8dp"
                     android:background="@drawable/ar_tv"
-                    android:translationZ="90dp"
+                    android:translationZ="95dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/judson" />
 
@@ -217,12 +269,13 @@
 
 
         <LinearLayout
+            android:id="@+id/ll6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivPlant"
+                android:id="@+id/ivScientificName"
                 android:layout_width="50dp"
                 android:elevation="4dp"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -231,11 +284,11 @@
                 android:backgroundTint="@color/white"
                 android:layout_marginTop="22dp"
                 android:layout_marginStart="16dp"
-                android:translationZ="90dp"
-                android:src="@drawable/ic_icon_plant"/>
+                android:translationZ="95dp"
+                android:src="@drawable/ic_scientific_name"/>
 
                 <TextView
-                    android:id="@+id/tvPlant"
+                    android:id="@+id/tvScientificName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -243,7 +296,7 @@
                     android:textColor="#008B8A"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ar_tv"
-                    android:translationZ="90dp"
+                    android:translationZ="95dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/judson" />
 
@@ -251,12 +304,13 @@
 
 
         <LinearLayout
+            android:id="@+id/ll7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivHand"
+                    android:id="@+id/ivVernacularNames"
                     android:layout_width="50dp"
                     android:elevation="4dp"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -265,11 +319,11 @@
                     android:backgroundTint="@color/white"
                     android:layout_marginTop="14dp"
                     android:layout_marginStart="16dp"
-                    android:translationZ="90dp"
-                    android:src="@drawable/ic_icon_names"/>
+                    android:translationZ="95dp"
+                    android:src="@drawable/ic_vernacular_names"/>
 
                 <TextView
-                    android:id="@+id/tvHand"
+                    android:id="@+id/tvVernacularNames"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
@@ -278,8 +332,182 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ar_tv"
                     android:layout_marginEnd="16dp"
-                    android:translationZ="90dp"
+                    android:translationZ="95dp"
                     android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivFlowers"
+                android:layout_width="50dp"
+                android:elevation="4dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_flowers"/>
+
+            <TextView
+                android:id="@+id/tvFlowers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="#008B8A"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ar_tv"
+                android:layout_marginEnd="16dp"
+                android:translationZ="95dp"
+                android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivHabit"
+                android:layout_width="50dp"
+                android:elevation="4dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_habit"/>
+
+            <TextView
+                android:id="@+id/tvHabit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="#008B8A"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ar_tv"
+                android:layout_marginEnd="16dp"
+                android:translationZ="95dp"
+                android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivLeaves"
+                android:layout_width="50dp"
+                android:elevation="4dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_leaves"/>
+
+            <TextView
+                android:id="@+id/tvLeaves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="#008B8A"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ar_tv"
+                android:layout_marginEnd="16dp"
+                android:translationZ="95dp"
+                android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivFruits"
+                android:layout_width="50dp"
+                android:elevation="4dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_fruits"/>
+
+            <TextView
+                android:id="@+id/tvFruits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="#008B8A"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ar_tv"
+                android:layout_marginEnd="16dp"
+                android:translationZ="95dp"
+                android:fontFamily="@font/judson" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivOrigin"
+                android:layout_width="50dp"
+                android:elevation="4dp"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                android:scaleType="fitXY"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                android:translationZ="95dp"
+                android:src="@drawable/ic_origin"/>
+
+            <TextView
+                android:id="@+id/tvOrigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="#008B8A"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ar_tv"
+                android:layout_marginEnd="16dp"
+                android:translationZ="95dp"
+                android:fontFamily="@font/judson" />
 
         </LinearLayout>
     </LinearLayout>
@@ -297,8 +525,8 @@
         android:fontFamily="@font/judson"
         android:textColor="#0C4C4C"
         android:id="@+id/tvName"
+        android:translationZ="95dp"
         app:layout_constraintTop_toBottomOf="@id/btnClose"
-        android:layout_marginTop="0sp"
         app:layout_constraintVertical_bias="1"
         android:maxLines="1"
         android:padding="8dp"
@@ -311,6 +539,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="-14dp"
+        android:translationZ="95dp"
         android:src="@drawable/arscreen_logo"
         app:layout_constraintBottom_toBottomOf="@id/tvName"
         app:layout_constraintEnd_toStartOf="@id/tvName"
@@ -319,9 +548,11 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/btnPlay"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="60dp"
-        android:layout_height="0dp"
+        android:translationZ="180dp"
+
+        android:layout_height="60dp"
         android:src="@drawable/ic_play_final"
         app:layout_constraintBottom_toBottomOf="@id/btnAR"
         app:layout_constraintTop_toTopOf="@id/btnAR"
@@ -331,11 +562,13 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/btnAR"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_btn_ar"
-        app:layout_constraintBottom_toTopOf="@id/layio"
+        android:translationZ="180dp"
+        android:src="@drawable/ic_btn_ar_final"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        android:layout_marginTop="-24dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"/>
@@ -345,9 +578,4 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--        <fragment android:name="com.google.ar.sceneform.ux.ArFragment"-->
-    <!--            android:id="@+id/ux_fragment"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
+</androidx.constraintlayout.motion.widget.MotionLayout>

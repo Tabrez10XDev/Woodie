@@ -83,16 +83,12 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
         binding.apply {
-            tvName.text = " " + tree.name
-            tvTree.text = spannableText("Height - " + tree.height, 0, 8)
-            tvHeart.text = spannableText("Lifespan - " + tree.lifespan, 0, 10)
-            tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
-            tvPlant.text = spannableText("Scientific Names - " + tree.scientificName, 0, 18)
-            tvHand.text = spannableText("Vernacular Names - " + tree.vernacularNames, 0, 18)
-        }
-
-        binding.btnAR.setOnClickListener {
-           changeTerraform(tree)
+//            tvName.text = " " + tree.name
+//            tvTree.text = spannableText("Height - " + tree.height, 0, 8)
+//            tvHeart.text = spannableText("Lifespan - " + tree.lifespan, 0, 10)
+//            tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
+//            tvPlant.text = spannableText("Scientific Names - " + tree.scientificName, 0, 18)
+//            tvHand.text = spannableText("Vernacular Names - " + tree.vernacularNames, 0, 18)
         }
 
         binding.btnPlay.setOnClickListener {
