@@ -2,6 +2,7 @@ package pro.lj.woodie02.ui.app
 
 import android.Manifest
 import android.R.attr.radius
+import android.app.ProgressDialog.show
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +11,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.shape.CornerFamily
-import com.google.android.material.snackbar.Snackbar
+import np.com.susanthapa.curved_bottom_navigation.CbnMenuItem
 import pro.lj.woodie02.R
 import pro.lj.woodie02.databinding.ActivityMainBinding
 import pro.lj.woodie02.repositories.MainRepository
@@ -40,24 +40,40 @@ class MainActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setTheme(R.style.Theme_Woodie02)
         setContentView(view)
-        binding.fab.imageTintList = null
-        binding.bottomNavBar.setupWithNavController(findNavController(R.id.fragment))
-        binding.bottomNavBar.menu.getItem(1).isEnabled = false
-        binding.bottomNavBar.background = null
-        binding.bottomNavBar.itemIconTintList = null
 
-        binding.fab.setOnClickListener {
-            findNavController(R.id.fragment).navigate(R.id.home)
-        }
-//        val bottomBarBG = binding.bottomAppBar.background
-//        val shapeAppearanceModel = ShapeAppearanceModel().toBuilder()
-//            .setAllCorners(CornerFamily.ROUNDED, 30f)
-//            .build()
-//        binding.bottomAppBar.background = shapeAppearanceModel
-//        ViewCompat.setBackground(binding.bottomAppBar, MaterialShapeDrawable(shapeAppearanceModel))
+        val menuItems = arrayOf(
+            CbnMenuItem(
+                R.drawable.trial_location, // the icon
+                R.drawable.trial_location_avd, // the AVD that will be shown in FAB
+                R.id.searchFragment // optional if you use Jetpack Navigation
+            ),
+            CbnMenuItem(
+                R.drawable.trial_home, // the icon
+                R.drawable.trial_home_avd, // the AVD that will be shown in FAB
+                R.id.home // optional if you use Jetpack Navigation
+            ),
+            CbnMenuItem(
+                R.drawable.trial_home, // the icon
+                R.drawable.trial_home_avd, // the AVD that will be shown in FAB
+                R.id.qrFragment // optional if you use Jetpack Navigation
+            ),
+            CbnMenuItem(
+                R.drawable.trial_home, // the icon
+                R.drawable.trial_home_avd, // the AVD that will be shown in FAB
+                R.id.locationFragment
+                    // optional if you use Jetpack Navigation
+            )
+        )
+        binding.navView.setMenuItems(menuItems, 1)
 
+        binding.navView.setupWithNavController(findNavController(R.id.fragment))
 
     }
+
+
+
+
+
 
 
 

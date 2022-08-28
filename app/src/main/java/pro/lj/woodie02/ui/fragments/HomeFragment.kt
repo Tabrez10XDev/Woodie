@@ -194,7 +194,6 @@ class HomeFragment : Fragment() {
         binding.homeRV.apply {
             adapter = homeAdapter
             layoutManager = gridLayoutManager
-
         }
     }
 

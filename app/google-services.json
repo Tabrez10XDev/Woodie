@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "899681278701",
-    "project_id": "woodie-13061",
-    "storage_bucket": "woodie-13061.appspot.com"
+    "project_number": "279922647666",
+    "project_id": "woodie-72efb",
+    "storage_bucket": "woodie-72efb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:899681278701:android:71834403892b89e6910ae4",
+        "mobilesdk_app_id": "1:279922647666:android:8cff8828445d7338b4d8eb",
         "android_client_info": {
           "package_name": "pro.lj.woodie02"
         }
       },
       "oauth_client": [
         {
-          "client_id": "899681278701-5t63vt0q0kpnahdd1faoia2nffks07b5.apps.googleusercontent.com",
+          "client_id": "279922647666-0f54fj3pt06hqopul738g669ov192ahe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAItblWxuas8K3_bHi0lwPKCvOq2939BOM"
+          "current_key": "AIzaSyCX0FQXHrU-UGflXJzrp8d0na4kZIX9AJw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "899681278701-5t63vt0q0kpnahdd1faoia2nffks07b5.apps.googleusercontent.com",
+              "client_id": "279922647666-0f54fj3pt06hqopul738g669ov192ahe.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

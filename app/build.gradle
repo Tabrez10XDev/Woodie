@@ -3,8 +3,8 @@ plugins {
     id 'kotlin-android'
     id  "androidx.navigation.safeargs"
     id 'com.google.ar.sceneform.plugin'
-    id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 
 }
 
@@ -21,6 +21,8 @@ android {
         renderscriptTargetApi = 18
         renderscriptSupportModeEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
     }
 
     buildTypes {
@@ -95,4 +97,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
+    implementation 'com.mapbox.maps:android:10.7.0'
+
+    implementation 'np.com.susanthapa:curved_bottom_navigation:0.6.5'
+
 }

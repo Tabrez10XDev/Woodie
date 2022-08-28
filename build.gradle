@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0"
         classpath 'com.google.ar.sceneform:plugin:1.15.0'
         classpath 'com.google.gms:google-services:4.3.10'
@@ -21,7 +21,22 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven{
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = "mapbox"
+                // Use the secret token you stored in gradle.properties as the password
+                password = "sk.eyJ1IjoibG93anVua2llIiwiYSI6ImNsN2JnaHRuYjA3b3gzdXFjc3g3dGd2b3QifQ.DPF2AuCefW_nINVFHaMI8Q"
+            }
+        }
 
     }
 }

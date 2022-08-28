@@ -22,7 +22,7 @@
             android:layout_marginTop="-24dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="4dp"/>
         <Constraint android:id="@+id/tvName"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
@@ -49,10 +49,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:alpha="0.65"            />
+            android:alpha="0.65"/>
         <Constraint android:id="@+id/viewPager"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:translationZ="95dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
             android:layout_marginTop="-24dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="4dp"/>
         <Constraint android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

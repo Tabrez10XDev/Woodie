@@ -69,7 +69,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
                 tvScientificName.text = item.scientificName
                 Glide
                         .with(itemView.context)
-                        .load(item.imageUri)
+                        .load(item.imageUri?.get(0))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(ivProduct)
             }

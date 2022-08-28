@@ -8,15 +8,22 @@
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/bottom_nav_bg.xml" value="0.1" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/btn_qr.xml" value="0.1" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/card_bg.xml" value="0.1" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/divider8p.xml" value="0.176" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ellipe_logo.xml" value="0.176" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/home_selector.xml" value="0.1" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_btn_ar.xml" value="0.121" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_btn_ar_final.xml" value="0.121" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_btn_play.xml" value="0.121" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_dashboard_qr.xml" value="0.1135" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_dashboard_search.xml" value="0.1135" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_icon_heart.xml" value="0.176" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_play_final.xml" value="0.176" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/ic_stop_final.xml" value="0.176" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/location_selector.xml" value="0.121" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/trial_home.xml" value="0.1125" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/trial_home_avd.xml" value="0.1125" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/trial_location.xml" value="0.1135" />
+        <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/drawable/trial_location_avd.xml" value="0.1135" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/layout/activity_main.xml" value="0.18299445471349354" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/layout/ar_screen.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/meett/AndroidStudioProjects/Woodie/app/src/main/res/layout/fragment_home.xml" value="0.1" />

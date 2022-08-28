@@ -24,4 +24,15 @@
         android:label="LocationFragment" >
 
     </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="pro.lj.woodie02.ui.fragments.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" />
+    <activity
+        android:id="@+id/location2"
+        android:name="pro.lj.woodie02.ui.app.Location"
+        android:label="Location" />
+
+
 </navigation>

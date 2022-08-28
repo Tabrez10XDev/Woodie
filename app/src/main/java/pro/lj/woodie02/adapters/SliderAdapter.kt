@@ -41,7 +41,7 @@ class SliderAdapter : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-    return 5
+    return 3
     //   return differ.currentList.size
     }
 
@@ -49,10 +49,9 @@ class SliderAdapter : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
     override fun onBindViewHolder(holder: SliderViewHolder, position: Int) {
         val item = differ.currentList[0]
         with(holder){
-            Log.d("sham",item.imageUri)
             Glide
                 .with(itemView.context)
-                .load(item.imageUri)
+                .load(item.imageUri?.get(position))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageSlider)
         }
@@ -60,9 +59,5 @@ class SliderAdapter : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
 
     }
 
-    val tips = listOf<String>(
-        "Don't wait for the white dots as it only marks the most ideal surfaces.",
-        "In Non-Ideal surfaces you might have to tap more than once!",
-        "Drink water and stay hydrated"
-    )
+
 }

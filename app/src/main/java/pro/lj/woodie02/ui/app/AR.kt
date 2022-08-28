@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -61,9 +62,9 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var arFragment: ArFragment
     private val arSceneView get() = arFragment.arSceneView
     private val scene get() = arSceneView.scene
-
     private var model: Renderable? = null
     lateinit var tts: TextToSpeech
+    private lateinit var modelUri: String
     var status = 1
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,10 +73,10 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         val view = binding.root
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(view)
-        Log.d("TAGGG", "here")
         val intent = this.intent
         val bundle = intent.getBundleExtra("item")
-        val tree : Tree = bundle?.getSerializable("item") as Tree
+        val tree: Tree = bundle?.getSerializable("item") as Tree
+        modelUri = tree.modelUri
         tts = TextToSpeech(this, this)
         tts.setSpeechRate(1.2f)
         setUpViewPager(tree)
@@ -83,12 +84,18 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
         binding.apply {
-//            tvName.text = " " + tree.name
-//            tvTree.text = spannableText("Height - " + tree.height, 0, 8)
-//            tvHeart.text = spannableText("Lifespan - " + tree.lifespan, 0, 10)
-//            tvFace.text = spannableText("Uses - " + tree.uses, 0, 6)
-//            tvPlant.text = spannableText("Scientific Names - " + tree.scientificName, 0, 18)
-//            tvHand.text = spannableText("Vernacular Names - " + tree.vernacularNames, 0, 18)
+            tvName.text = " " + tree.name
+            tvCommonName.text = spannableText("Common Name - " + tree.commonName, 0, 13)
+            tvBotanicalDescription.text = spannableText("Botanical Description - " + tree.botanicalDes, 0, 23)
+            tvFamily.text = spannableText("Family - " + tree.family, 0, 8)
+            tvUses.text = spannableText("Uses - " + tree.uses, 0, 6)
+            tvScientificName.text = spannableText("Scientific Name - " + tree.scientificName, 0, 17)
+            tvVernacularNames.text = spannableText("Tamil Name - " + tree.tamilName,0,12)
+            tvFlowers.text = spannableText("Flowers - " + tree.flowers,0,9)
+            tvHabit.text = spannableText("Habit - " + tree.habit,0,7)
+            tvLeaves.text = spannableText("Leaves - " + tree.leaves,0,8)
+            tvFruits.text = spannableText("Fruits - " + tree.fruits,0,8)
+            tvOrigin.text = spannableText("Origin - " + tree.origin,0,8)
         }
 
         binding.btnPlay.setOnClickListener {
@@ -105,18 +112,21 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
+            arFragment = (supportFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
+                setOnSessionConfigurationListener { session, config ->
+                    instructionsController = null
+                }
 
-        arFragment = (supportFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
-            setOnSessionConfigurationListener { session, config ->
-                instructionsController = null
+                setOnTapArPlaneListener(::onTapPlane)
             }
 
-            setOnTapArPlaneListener(::onTapPlane)
-        }
+            CoroutineScope(Dispatchers.Main).launch {
+                loadModels(tree)
+            }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            loadModels(tree)
-        }
+
+
+
 
 
 
@@ -124,6 +134,8 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun loadModels(tree: Tree) {
         try{
+            Log.d("Taby",tree.modelUri)
+
             ModelRenderable.builder()
                 .setSource(applicationContext, Uri.parse(tree.modelUri))
                 .setIsFilamentGltf(true)
@@ -133,12 +145,16 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }
         }
         catch (e:Exception){
-            Log.d("Scee",e.localizedMessage.toString())
+            //Toast.makeText(this,e.localizedMessage.toString(),Toast.LENGTH_SHORT).show()
         }
 
     }
 
     private fun onTapPlane(hitResult: HitResult, plane: Plane, motionEvent: MotionEvent) {
+        if(modelUri == "") {
+            Toast.makeText(applicationContext, "AR Coming soon...", Toast.LENGTH_SHORT).show()
+            return
+        }
         if (model == null) {
             Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT).show()
             return
@@ -150,7 +166,6 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             addChild(TransformableNode(arFragment.transformationSystem).apply {
                 renderable = model
                 renderableInstance?.animate(true)?.start()
-                Log.d("Scee","HIII")
             })
         })
     }
@@ -241,7 +256,6 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
             (activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
                 .deviceConfigurationInfo
                 .glEsVersion
-        Log.d("TAGGG", "Open: $openGlVersionString")
 
         return true
     }
@@ -280,7 +294,8 @@ class AR : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         } else {
             Log.e("TTS", "Initilization Failed!")
-        }    }
+        }
+    }
 
     val Int.px get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 

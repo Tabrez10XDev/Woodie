@@ -15,7 +15,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Woodie02">
+        android:theme="@style/Theme.Woodie02"
+        android:usesCleartextTraffic="true"
+        >
         <activity android:name=".ui.app.MainActivity"
             android:theme="@style/FullscreenTheme"
             android:windowSoftInputMode="adjustNothing"
@@ -29,6 +31,7 @@
         </activity>
         <activity android:name=".ui.app.AR"
             android:exported="true"/>
+        <activity android:name=".ui.app.Location" />
 
         <meta-data android:name="com.google.ar.core" android:value="optional" />
         <meta-data
